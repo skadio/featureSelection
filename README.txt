@@ -1,4 +1,5 @@
-This repository contains implementations (primarily for Matlab) of some of the feature selection methods appearing in 
+This repository contains implementations (primarily for Matlab)
+of some of the feature selection methods appearing in 
 
 Pohjalainen, Rasanen, Kadioglu: 
 "Feature Selection Methods and Their Combinations in High-Dimensional 
