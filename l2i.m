@@ -12,7 +12,7 @@ function [I,C] = l2i(L)
 % gscatter(meas(:,1),meas(:,2),Is);
 % [f,w]=MI(meas,Is);
 
-% J.P. 030414
+% J.P. 030414 
 
 C = unique(L);
 I = zeros(size(L));
