@@ -14,10 +14,12 @@ function classhypo = KNN(features_train,features_test,labels_train,k,weighted)
 %       labels_train:        N x 1 vector of class labels for training
 %                               samples
 %       k:                   number of nearest neighbors used in the
-%                               classification
+%                               classification (can be a vector)
 %       weighted:            weight nearest neighbor counts by the inverse of 
-%                               class frequencies estiamted from the training
+%                               class frequencies estimated from the training
 %                               data? (0/1, default: 1).
+%
+%  Authors: Okko Rasanen, Jouni Pohjalainen, June 2014
 
 persistent pdist2_exists;
 
@@ -30,15 +32,16 @@ if ~exist('weighted','var') || isempty(weighted)
 end
 
 % Compute the distribution of samples per each class in the training data
-
-if(weighted == 1)
-    N_classes = max(labels_train);
+N_classes = max(labels_train);
+if(weighted == 1)    
     w = zeros(N_classes,1);
     for c = 1:N_classes
         w(c) = sum(labels_train == c);
     end
 end
 
+% Check if pdist2 function exists for distance computations (faster but 
+% absent from older MATLAB versions). 
 if isempty(pdist2_exists)
     pdist2_exists = exist('pdist2','file');
 end
@@ -54,19 +57,20 @@ end
 
 [tmp,orderi] = sort(D,2,'ascend');                     % Sort distances into ascending order
 
-% Get classes of k nearest neighbors for each dev sample
-nearest =  labels_train(orderi(:,1:k));
+classhypo = zeros(size(features_test,1),length(k));
+for i1=1:length(k)
+    % Get classes of k nearest neighbors for each dev sample
+    nearest =  labels_train(orderi(:,1:k(i1)));
 
-% Get class hypothesis for each sample by (weighted) majority voting
-classhypo = zeros(size(nearest,1),1);
-for j = 1:size(nearest,1);
-    a = zeros(N_classes,1);
+    % Get class hypothesis for each sample by (weighted) majority voting
+
+    a = zeros(size(nearest,1),N_classes);
     for c = 1:N_classes
-        if(weighted == 1)
-            a(c) = sum(nearest(j,:) == c)./w(c); % weighting with training data distribution "w".
+        if weighted
+            a(:,c) = sum(nearest==c,2)/w(c);
         else
-            a(c) = sum(nearest(j,:) == c); 
+            a(:,c) = sum(nearest==c,2);
         end
     end
-    [tmp,classhypo(j)] = max(a);
+    [tmp,classhypo(:,i1)] = max(a,[],2);    
 end
