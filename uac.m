@@ -1,9 +1,14 @@
 function [ua,ac] = uac(labels,truelabels)
 % [ua,ac] = uac(labels,truelabels)
+% Given a predicted labeling and a true reference labeling,
+% computes the unweighted average recall (class-average
+% classification accuracy) and the overall accuracy.
 % ua - unweighted average recall
 % ac - classification accuracy
 % labels - predicted labels
 % truelabels - actual class labels
+
+% JP 2013
 
 label_index = unique(truelabels);
 nlabels = length(label_index);
