@@ -12,7 +12,7 @@ function [classhypo,D] = KNNI(features_train,features_test,labels_train,k,weight
 %       features_test:       M x F matrix containing the classification data, 
 %                               where M is the number of samples
 %                               and F is the number of features.
-%       labels_train:        N x 1 vector of class labels for training
+%       labels_train:        N x 1 vector of integer class labels for training
 %                               samples
 %       k:                   number of nearest neighbors used in the
 %                               classification
