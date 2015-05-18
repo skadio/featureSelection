@@ -19,7 +19,7 @@ function [features,weights] = SD(features,labels,Q)
 %
 % Please see J. Pohjalainen, O. Rasanen & S. Kadioglu: "Feature Selection Methods and 
 % Their Combinations in High-Dimensional Classification of Speaker Likability, 
-% Intelligibility and Personality Traits", Computer Speech and Language, 2014, for more details.
+% Intelligibility and Personality Traits", Computer Speech and Language, 2015, for more details.
 
 if nargin <3
     Q = 12;
