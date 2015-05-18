@@ -63,7 +63,7 @@ function [S,W,AW] = RSFS(features_train,features_dev,labels_train,labels_dev,var
 %
 % Please see J. Pohjalainen, O. Rasanen & S. Kadioglu: "Feature Selection Methods and
 % Their Combinations in High-Dimensional Classification of Speaker Likability,
-% Intelligibility and Personality Traits", Computer Speech and Language, 2015,
+% Intelligibility and Personality Traits", Computer Speech and Language, 2015, 
 %  or
 % Räsänen O. & Pohjalainen J., "Random subset feature selection in automatic recognition
 % of developmental disorders, affective states, and level of conflict from speech",
