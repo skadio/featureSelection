@@ -76,7 +76,7 @@ function [S,W] = SFS(X1,X2,y1,y2,k,t,N)
 % J. Pohjalainen, O. Rasanen & S. Kadioglu: "Feature Selection Methods and
 % Their Combinations in High-Dimensional Classification of Speaker Likability,
 % Intelligibility and Personality Traits", Computer Speech and Language,
-% 2014.
+% 2015.
 %
 % NOTE: The algorithm uses unweighted average recall (UAR) as the default
 % performance criterion for relevance update. Modify the function calls at
