@@ -80,10 +80,10 @@ function [S,W] = SFFS(X1,X2,y1,y2,k,t,N)
 %
 % NOTE: The algorithm uses unweighted average recall (UAR) as the default
 % performance criterion for relevance update. Modify the function calls at
-% rows 132-133 and 183-184 in order to introduce your own criterion function.
+% rows 136-137 and 189-190 in order to introduce your own criterion function.
 %
 % NOTE 2: The algorithm uses KNN classifier by default. The classifier can
-% be changed on rows 136-137 and 189-190.
+% be changed on rows 131-132 and 184-185.
 %
 % NOTE 3: The KNN implementation KNNI used here is able to incrementally
 % update the distance matrix, which can speed up computation of nested
