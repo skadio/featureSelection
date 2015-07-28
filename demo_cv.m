@@ -82,6 +82,10 @@ hypos_RSFS = zeros(N,1);
 hypos_SFFS = zeros(N,1);
 hypos_SFS = zeros(N,1);
 
+nfeat_RSFS = 0;
+nfeat_SFS = 0;
+nfeat_SFFS = 0;
+
 for cvi=1:ncv
     fprintf('Cross validation partition %d/%d\n',cvi,ncv);
     
@@ -117,12 +121,20 @@ for cvi=1:ncv
     hypos_RSFS(testidx) = KNN(features(trainidx,F_RSFS),features(testidx,F_RSFS),labels(trainidx),k);
     hypos_SFS(testidx) = KNN(features(trainidx,F_SFS),features(testidx,F_SFS),labels(trainidx),k);
     hypos_SFFS(testidx) = KNN(features(trainidx,F_SFFS),features(testidx,F_SFFS),labels(trainidx),k);
+    
+    % to compute the average number of features selected by RSFS, SFS and SFFS
+    nfeat_RSFS = nfeat_RSFS + length(F_RSFS);
+    nfeat_SFS = nfeat_SFS + length(F_SFS);
+    nfeat_SFFS = nfeat_SFFS + length(F_SFFS);
 end
+nfeat_RSFS = nfeat_RSFS/ncv;
+nfeat_SFS  = nfeat_SFS/ncv;
+nfeat_SFFS = nfeat_SFFS/ncv;
 
 % Print results over all 5 folds
 fprintf('Original %d features: %0.2f%% correct.\n',size(features,2),sum(hypos_orig == labels)/length(labels)*100);
 fprintf('Best 10 features from SD: %0.2f%% correct.\n',sum(hypos_SD == labels)/length(labels)*100);
 fprintf('Best 10 features from MI: %0.2f%% correct.\n',sum(hypos_MI == labels)/length(labels)*100);
-fprintf('RSFS feature set (%d features): %0.2f%% correct.\n',length(F_RSFS),sum(hypos_RSFS == labels)/length(labels)*100);
-fprintf('SFS feature set (%d features): %0.2f%% correct.\n',length(F_SFS),sum(hypos_SFS == labels)/length(labels)*100);
-fprintf('SFFS feature set (%d features): %0.2f%% correct.\n',length(F_SFFS),sum(hypos_SFFS == labels)/length(labels)*100);
+fprintf('RSFS feature sets (%0.1f features on average): %0.2f%% correct.\n',nfeat_RSFS,sum(hypos_RSFS == labels)/length(labels)*100);
+fprintf('SFS feature sets (%0.1f features on average): %0.2f%% correct.\n',nfeat_SFS,sum(hypos_SFS == labels)/length(labels)*100);
+fprintf('SFFS feature sets (%0.1f features on average): %0.2f%% correct.\n',nfeat_SFFS,sum(hypos_SFFS == labels)/length(labels)*100);
