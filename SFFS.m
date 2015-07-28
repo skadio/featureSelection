@@ -80,16 +80,16 @@ function [S,W] = SFFS(X1,X2,y1,y2,k,t,N)
 %
 % NOTE: The algorithm uses unweighted average recall (UAR) as the default
 % performance criterion for relevance update. Modify the function calls at
-% rows 136-137 and 189-190 in order to introduce your own criterion function.
+% rows 137-138 and 190-191 in order to introduce your own criterion function.
 %
 % NOTE 2: The algorithm uses KNN classifier by default. The classifier can
-% be changed on rows 131-132 and 184-185.
+% be changed on rows 132-133, 185-186 and 265-266.
 %
 % NOTE 3: The KNN implementation KNNI used here is able to incrementally
 % update the distance matrix, which can speed up computation of nested
 % feature sets like forward selection uses.
 %
-% Authors: Jouni Pohjalainen and Okko Rasanen, 2014.
+% Authors: Jouni Pohjalainen and Okko Rasanen, 2014-2015.
 % Mail: jpohjala@acoustics.hut.fi, okko.rasanen@aalto.fi
 %
 % The algorithm can be freely used for research purposes. Please email your
@@ -112,6 +112,7 @@ S = [];
 W = [];
 loop = 1+t;
 totalbestval = 0;
+lastreduced = 0; %
 
 % KNNI SPECIFIC: initialize KNN distance matrix
 D12 = 0;
@@ -223,6 +224,8 @@ while loop>0
             D21 = bestD21;
 
             bestval(length(S)) = exclusion_score;
+            W(length(S)) = exclusion_score; %
+            lastreduced = length(S); %
             loop = 1+t; % reset counter after feature exclusion
             
             statstr = ['Exclusion (' num2str(length(S)) '-1): ' num2str(excidx) ': ' num2str(exclusion_score)];
@@ -254,3 +257,21 @@ end
 
 S = S(1:end-(t+1)+loop);
 W = W(1:end-(t+1)+loop);
+
+% UPDATE THE SCORES FOR THE FINAL NESTED SUBSETS %
+% subsets of the feature set after the final exclusion phase
+
+for i1=1:lastreduced-1
+  [y1_knn,newD21] = KNNI(X2(:,S(1:i1)),X1(:,S(1:i1)),y2,k,1);
+  [y2_knn,newD12] = KNNI(X1(:,S(1:i1)),X2(:,S(1:i1)),y1,k,1);
+  averagescore = 0;
+  for i2=1:size(y1_knn,2)
+    score_1 = uac(y1_knn(:,i2), y1);
+    score_2 = uac(y2_knn(:,i2), y2);
+    % Compute overall performance score
+    averagescore = averagescore + size(X1,1)*score_1;
+    averagescore = averagescore + size(X2,1)*score_2;
+  end
+  averagescore = averagescore/(length(k)*(size(X1,1)+size(X2,1)));
+  W(i1) = averagescore;
+end
