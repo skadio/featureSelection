@@ -228,7 +228,7 @@ while loop>0
             lastreduced = length(S); %
             loop = 1+t; % reset counter after feature exclusion
             
-            statstr = ['Exclusion (' num2str(length(S)) '-1): ' num2str(excidx) ': ' num2str(exclusion_score)];
+            statstr = ['Exclusion (' num2str(length(S)) '): ' num2str(excidx) ': ' num2str(exclusion_score)];
             if exclusion_score>=totalbestval
                 statstr = [statstr ' *'];
             end
