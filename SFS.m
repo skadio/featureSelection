@@ -152,7 +152,7 @@ while loop>0
                 bestD12 = newD12;
                 bestD21 = newD21;
                 
-                statstr = ['SFS(' num2str(1+length(S)) ') / ' num2str(i1) ': ' num2str(averagescore)];
+                statstr = ['SFS(' num2str(1+length(S)) ')/' num2str(i1) ': ' num2str(averagescore)];
                 if averagescore>=totalbestval
                     statstr = [statstr ' *'];
                 end
