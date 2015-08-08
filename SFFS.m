@@ -153,7 +153,7 @@ while loop>0
                 bestD12 = newD12;
                 bestD21 = newD21;
 
-                statstr = ['SFFS(' num2str(1+length(S)) ') / ' num2str(i1) ': ' num2str(averagescore)];
+                statstr = ['SFFS(' num2str(1+length(S)) ')/' num2str(i1) ': ' num2str(averagescore)];
                 if averagescore>=totalbestval
                     statstr = [statstr ' *'];
                 end
@@ -228,7 +228,7 @@ while loop>0
             lastreduced = length(S); %
             loop = 1+t; % reset counter after feature exclusion
             
-            statstr = ['Exclusion (' num2str(length(S)+1) '-1): ' num2str(excidx) ': ' num2str(exclusion_score)];
+            statstr = ['Exclusion (' num2str(length(S)+1) '-1)/' num2str(excidx) ': ' num2str(exclusion_score)];
             if exclusion_score>=totalbestval
                 statstr = [statstr ' *'];
             end
